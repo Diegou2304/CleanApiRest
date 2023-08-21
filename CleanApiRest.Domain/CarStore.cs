@@ -10,7 +10,6 @@ namespace CleanApiRest.Domain
         public string City { get; set; }
         public string OwnerName { get; set; }
         public string CountryName { get; set; }
-        public int CarId { get; set; }
         public ICollection<Car> Cars { get; set; }
 
     }
