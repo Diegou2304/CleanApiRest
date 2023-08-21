@@ -22,7 +22,6 @@ namespace CleanApiRest.Infrastructure.Migrations
                     City = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     OwnerName = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     CountryName = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    CarId = table.Column<int>(type: "int", nullable: false),
                     CreationDate = table.Column<DateTime>(type: "datetime2", nullable: true),
                     CreatedBy = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     LastModifiedDate = table.Column<DateTime>(type: "datetime2", nullable: true),
@@ -57,8 +56,18 @@ namespace CleanApiRest.Infrastructure.Migrations
                         column: x => x.CarStoreId,
                         principalTable: "CarStores",
                         principalColumn: "CarStoreId",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                 });
+
+            migrationBuilder.InsertData(
+                table: "CarStores",
+                columns: new[] { "CarStoreId", "Address", "City", "CountryName", "CreatedBy", "CreationDate", "LastModifiedBy", "LastModifiedDate", "Name", "OwnerName" },
+                values: new object[] { 1, "5th Street Boulebard Avenue", "Miami", "UnitedStates", null, null, null, null, "Toyota Automotors", "Michael Maguire" });
+
+            migrationBuilder.InsertData(
+                table: "Cars",
+                columns: new[] { "CarId", "Brand", "CarStoreId", "ChasisNumber", "Color", "CreatedBy", "CreationDate", "LastModifiedBy", "LastModifiedDate", "ReleaseDate" },
+                values: new object[] { 1, "Toyota", 1, new Guid("00000000-0000-0000-0000-000000000000"), "Green", null, null, null, null, 2023 });
 
             migrationBuilder.CreateIndex(
                 name: "IX_Cars_CarStoreId",

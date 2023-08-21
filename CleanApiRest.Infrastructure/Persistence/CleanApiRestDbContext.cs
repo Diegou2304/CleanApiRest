@@ -18,11 +18,34 @@ namespace CleanApiRest.Infrastructure.Persistence
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
 
-            new CarStoreEntityTypeConfiguration().Configure(modelBuilder.Entity<CarStore>());
-        }
 
+
+           modelBuilder.Entity<CarStore>().HasData(
+          new CarStore
+          {
+              CarStoreId = 1,
+              Name = "Toyota Automotors",
+              Address = "5th Street Boulebard Avenue",
+              City = "Miami",
+              OwnerName = "Michael Maguire",
+              CountryName = "UnitedStates"
+          });
+
+            modelBuilder.Entity<Car>().HasData(
+                new Car
+                {
+                    CarId = 1,
+                
+                    Color = "Green",
+                    Brand = "Toyota",
+                    CarStoreId = 1
+                });
+
+            new CarStoreEntityTypeConfiguration()
+               .Configure(modelBuilder.Entity<CarStore>());
+        }
         public DbSet<Car> Cars { get; set; }
         public DbSet<CarStore> CarStores { get; set; }
-
+    
     }
 }

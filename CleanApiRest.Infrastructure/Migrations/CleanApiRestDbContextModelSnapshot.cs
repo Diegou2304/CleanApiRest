@@ -34,8 +34,7 @@ namespace CleanApiRest.Infrastructure.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("CarStoreId")
-                        .IsRequired()
+                    b.Property<int>("CarStoreId")
                         .HasColumnType("int");
 
                     b.Property<Guid>("ChasisNumber")
@@ -65,6 +64,17 @@ namespace CleanApiRest.Infrastructure.Migrations
                     b.HasIndex("CarStoreId");
 
                     b.ToTable("Cars");
+
+                    b.HasData(
+                        new
+                        {
+                            CarId = 1,
+                            Brand = "Toyota",
+                            CarStoreId = 1,
+                            ChasisNumber = new Guid("00000000-0000-0000-0000-000000000000"),
+                            Color = "Green",
+                            ReleaseDate = 2023
+                        });
                 });
 
             modelBuilder.Entity("CleanApiRest.Domain.CarStore", b =>
@@ -78,9 +88,6 @@ namespace CleanApiRest.Infrastructure.Migrations
                     b.Property<string>("Address")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("CarId")
-                        .HasColumnType("int");
 
                     b.Property<string>("City")
                         .IsRequired()
@@ -113,6 +120,17 @@ namespace CleanApiRest.Infrastructure.Migrations
                     b.HasKey("CarStoreId");
 
                     b.ToTable("CarStores");
+
+                    b.HasData(
+                        new
+                        {
+                            CarStoreId = 1,
+                            Address = "5th Street Boulebard Avenue",
+                            City = "Miami",
+                            CountryName = "UnitedStates",
+                            Name = "Toyota Automotors",
+                            OwnerName = "Michael Maguire"
+                        });
                 });
 
             modelBuilder.Entity("CleanApiRest.Domain.Car", b =>
@@ -120,7 +138,7 @@ namespace CleanApiRest.Infrastructure.Migrations
                     b.HasOne("CleanApiRest.Domain.CarStore", "CarStore")
                         .WithMany("Cars")
                         .HasForeignKey("CarStoreId")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("CarStore");

@@ -10,10 +10,8 @@ namespace CleanApiRest.Infrastructure.Persistence.Configuration
         {
             builder
                 .HasMany(c => c.Cars)
-                .WithOne(m => m.CarStore)
-                .HasForeignKey(m => m.CarStoreId)
-                .IsRequired()
-                .OnDelete(DeleteBehavior.Restrict);
+                .WithOne(c => c.CarStore);
+               
         }
     }
 }
