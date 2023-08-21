@@ -14,8 +14,8 @@ namespace CleanApiRest.Domain
         public string Brand { get; set; }
         public int ReleaseDate { get; set; } = DateTime.Now.Year;
 
-        public int CarStoreId { get; set; }
-        public CarStore CarStore { get; set; }
+        public int? CarStoreId { get; set; }
+        public CarStore? CarStore { get; set; }
 
 
 
