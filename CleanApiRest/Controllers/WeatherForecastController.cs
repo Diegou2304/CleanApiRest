@@ -1,3 +1,4 @@
+using CleanApiRest.Infrastructure;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CleanApiRest.Api.Controllers
@@ -21,6 +22,8 @@ namespace CleanApiRest.Api.Controllers
         [HttpGet(Name = "GetWeatherForecast")]
         public IEnumerable<WeatherForecast> Get()
         {
+
+          
             return Enumerable.Range(1, 5).Select(index => new WeatherForecast
             {
                 Date = DateTime.Now.AddDays(index),
