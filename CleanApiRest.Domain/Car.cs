@@ -9,7 +9,7 @@ namespace CleanApiRest.Domain
             
         }
         public int CarId { get; set; }
-        public Guid ChasisNumber { get; private set; } = Guid.Empty;
+        public Guid ChasisNumber { get;  set; } = Guid.Empty;
         public string Color { get; set; }
         public string Brand { get; set; }
         public int ReleaseDate { get; set; } = DateTime.Now.Year;
