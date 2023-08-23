@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using CleanApiRest.Application.Contracts;
 using CleanApiRest.Application.Features.Cars.CreateCar;
+using CleanApiRest.Application.Features.Cars.GetCars;
 using CleanApiRest.Domain;
 using Microsoft.AspNetCore.Mvc;
 
@@ -24,15 +25,19 @@ namespace CleanApiRest.Api.Controllers
         }
 
         [HttpGet]
-        public async Task<IEnumerable<Car>> Get([FromQuery] string? color)
+        public async Task<IEnumerable<GetCarsQueryResponse>> Get([FromQuery] string? color)
         {
             if (color == null)
             {
+                var temp = await _carRepository.GetAll();
 
-                return await _carRepository.GetAll();
+                return _mapper.Map<IEnumerable<GetCarsQueryResponse>>(temp); 
             }
+            
+            var cars = await _carRepository.GetCarByColor(color);
 
-            return await _carRepository.GetCarByColor(color);
+            return _mapper.Map<IEnumerable<GetCarsQueryResponse>>(cars);
+            
         }
 
         [HttpPost]
@@ -48,6 +53,8 @@ namespace CleanApiRest.Api.Controllers
 
             if(carStore is null) return BadRequest();
 
+            
+            car.ChasisNumber = Guid.NewGuid();
             var result = await _carRepository.AddAsync(car);
 
             return Ok(result.CarId);

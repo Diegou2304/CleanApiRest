@@ -15,7 +15,9 @@ namespace CleanApiRest.Application.Contracts
 
         public async Task<CarStore> GetCarStoreById(int id)
         {
-            return await _context.CarStores!.FirstOrDefaultAsync(c => c.CarStoreId == id);
+            return await _context.CarStores!.Include(d => d.Cars).FirstOrDefaultAsync(c => c.CarStoreId == id);
         }
+
+      
     }
 }

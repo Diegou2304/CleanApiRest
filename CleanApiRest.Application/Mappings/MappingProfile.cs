@@ -9,7 +9,8 @@ namespace CleanApiRest.Application.Mappings
     {
         public MappingProfile()
         {
-            CreateMap<CreateCarCommand, Car> ();
+            CreateMap<CreateCarCommand, Car>();
+            CreateMap<Car,GetCarsQueryResponse >();
         }
      
     }
