@@ -31,14 +31,16 @@ namespace CleanApiRest.Infrastructure.Repositories
             return (IReadOnlyCollection<T>)_context.Set<T>().Where(d => d.CreatedBy == creator).ToListAsync();
         }
 
-        public Task GetByIdAsync(int id)
-        {
-            throw new NotImplementedException();
-        }
+     
 
         public Task<T> UpdateAsync(T entity)
         {
             throw new NotImplementedException();
+        }
+
+        public async Task<IEnumerable<T>> GetAll()
+        {
+            return await _context.Set<T>().ToListAsync();
         }
     }
 }
