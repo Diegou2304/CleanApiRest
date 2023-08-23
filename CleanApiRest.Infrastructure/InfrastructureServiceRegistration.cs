@@ -12,6 +12,7 @@ namespace CleanApiRest.Infrastructure
     {
         public static IServiceCollection AddInfrastructureServices(this IServiceCollection services, IConfiguration configuration)
         {
+           
             services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
             services.AddScoped<ICarRepository, CarRepository>();
             services.AddDbContext<CleanApiRestDbContext>(opt => 

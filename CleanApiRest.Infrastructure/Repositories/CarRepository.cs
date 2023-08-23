@@ -18,7 +18,7 @@ namespace CleanApiRest.Infrastructure.Repositories
         public async Task<IEnumerable<Car>> GetCarByColor(string color)
         {
 
-            var result = await _context.Cars.Where(c => c.Color == color).ToListAsync();
+            var result = await _context.Cars.AsNoTracking().Where(c => c.Color == color).ToListAsync();
             return result;
         }
     }
