@@ -1,9 +1,9 @@
 ﻿using AutoMapper;
 using CleanApiRest.Application.Contracts;
+using CleanApiRest.Application.Features.Cars.CreateCar;
 using CleanApiRest.Domain;
-using CleanApiRest.Infrastructure.Persistence;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore.ChangeTracking;
+
 
 namespace CleanApiRest.Api.Controllers
 {
@@ -11,19 +11,46 @@ namespace CleanApiRest.Api.Controllers
     [Route("[controller]")]
     public class CarController : ControllerBase
     {
-        private readonly ICarRepository _respository;
-    
-        public CarController(ICarRepository respository)
+        private readonly ICarRepository _carRepository;
+        private readonly ICarStoreRepository _carStoreRepository;
+        private readonly IMapper _mapper;
+
+        public CarController(ICarRepository respository, IMapper mapper, ICarStoreRepository carStoreRepository)
         {
-            _respository = respository;
-         
+            _carRepository = respository;
+            _mapper = mapper;
+            _carStoreRepository = carStoreRepository;
+
         }
 
         [HttpGet]
-        public async Task<IEnumerable<Car>> Get([FromQuery] string color = null)
+        public async Task<IEnumerable<Car>> Get([FromQuery] string? color)
         {
-            return await _respository.GetCarByColor(color);
-;
+            if (color == null)
+            {
+
+                return await _carRepository.GetAll();
+            }
+
+            return await _carRepository.GetCarByColor(color);
+        }
+
+        [HttpPost]
+        public async Task<ActionResult<int>> CreateCar([FromBody] CreateCarCommand createCar)
+        {
+            if(!ModelState.IsValid)
+            {
+                return BadRequest();
+            }
+            var car = _mapper.Map<Car>(createCar);
+
+            var carStore = await _carStoreRepository.GetCarStoreById(car.CarStoreId);
+
+            if(carStore is null) return BadRequest();
+
+            var result = await _carRepository.AddAsync(car);
+
+            return Ok(result.CarId);
         }
     }
 }

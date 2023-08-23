@@ -14,6 +14,7 @@ namespace CleanApiRest.Infrastructure
         {
            
             services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
+            services.AddScoped<ICarStoreRepository, CarStoreRepository>();
             services.AddScoped<ICarRepository, CarRepository>();
             services.AddDbContext<CleanApiRestDbContext>(opt => 
             opt.UseSqlServer(configuration.GetConnectionString("ConnectionString")));

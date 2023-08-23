@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using CleanApiRest.Application.Features.Cars.CreateCar;
 using CleanApiRest.Application.Features.Cars.GetCars;
 using CleanApiRest.Domain;
 
@@ -8,7 +9,7 @@ namespace CleanApiRest.Application.Mappings
     {
         public MappingProfile()
         {
-            CreateMap<Car, GetCarsQueryResponse>();
+            CreateMap<CreateCarCommand, Car> ();
         }
      
     }
