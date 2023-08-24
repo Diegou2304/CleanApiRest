@@ -3,6 +3,7 @@ using CleanApiRest.Application.Contracts;
 using CleanApiRest.Application.Features.Cars.CreateCar;
 using CleanApiRest.Application.Features.Cars.GetCars;
 using CleanApiRest.Domain;
+using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
 
@@ -13,14 +14,14 @@ namespace CleanApiRest.Api.Controllers
     public class CarController : ControllerBase
     {
         private readonly ICarRepository _carRepository;
-        private readonly ICarStoreRepository _carStoreRepository;
         private readonly IMapper _mapper;
+        private readonly IMediator _mediator;
 
-        public CarController(ICarRepository respository, IMapper mapper, ICarStoreRepository carStoreRepository)
+        public CarController(ICarRepository respository, IMapper mapper, IMediator mediator)
         {
             _carRepository = respository;
             _mapper = mapper;
-            _carStoreRepository = carStoreRepository;
+            _mediator = mediator;
 
         }
 
@@ -43,21 +44,8 @@ namespace CleanApiRest.Api.Controllers
         [HttpPost]
         public async Task<ActionResult<int>> CreateCar([FromBody] CreateCarCommand createCar)
         {
-            if(!ModelState.IsValid)
-            {
-                return BadRequest();
-            }
-            var car = _mapper.Map<Car>(createCar);
 
-            var carStore = await _carStoreRepository.GetCarStoreById(car.CarStoreId);
-
-            if(carStore is null) return BadRequest();
-
-            
-            car.ChasisNumber = Guid.NewGuid();
-            var result = await _carRepository.AddAsync(car);
-
-            return Ok(result.CarId);
+            return await _mediator.Send(createCar);
         }
     }
 }
