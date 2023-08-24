@@ -2,8 +2,7 @@
 using CleanApiRest.Application.Contracts;
 using CleanApiRest.Domain;
 using MediatR;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Server.IIS.Core;
+
 
 namespace CleanApiRest.Application.Cars.CreateCar
 {
