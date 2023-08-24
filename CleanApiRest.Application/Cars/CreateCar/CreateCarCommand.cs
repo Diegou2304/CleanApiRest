@@ -1,7 +1,8 @@
-﻿
-namespace CleanApiRest.Application.Features.Cars.CreateCar
+﻿using MediatR;
+
+namespace CleanApiRest.Application.Cars.CreateCar
 {
-    public class CreateCarCommand
+    public class CreateCarCommand : IRequest<int>
     {
         public int CarStoreId { get; set; }
         public string Brand { get; set; }

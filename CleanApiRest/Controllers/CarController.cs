@@ -3,6 +3,7 @@ using CleanApiRest.Application.Contracts;
 using CleanApiRest.Application.Features.Cars.CreateCar;
 using CleanApiRest.Application.Features.Cars.GetCars;
 using CleanApiRest.Domain;
+using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
 
@@ -12,52 +13,37 @@ namespace CleanApiRest.Api.Controllers
     [Route("[controller]")]
     public class CarController : ControllerBase
     {
-        private readonly ICarRepository _carRepository;
-        private readonly ICarStoreRepository _carStoreRepository;
-        private readonly IMapper _mapper;
+       
+        private readonly IMediator _mediator;
 
-        public CarController(ICarRepository respository, IMapper mapper, ICarStoreRepository carStoreRepository)
+        public CarController(IMediator mediator)
         {
-            _carRepository = respository;
-            _mapper = mapper;
-            _carStoreRepository = carStoreRepository;
+           
+            _mediator = mediator;
 
         }
 
         [HttpGet]
-        public async Task<IEnumerable<GetCarsQueryResponse>> Get([FromQuery] string? color)
+        public async Task<ActionResult<IEnumerable<GetCarsQueryResponse>>> Get([FromQuery] string? color)
         {
-            if (color == null)
+            var query = new GetCarsQueryResponse
             {
-                var temp = await _carRepository.GetAll();
+                Color = color,
+            };
 
-                return _mapper.Map<IEnumerable<GetCarsQueryResponse>>(temp); 
-            }
-            
-            var cars = await _carRepository.GetCarByColor(color);
+            var cars = await _mediator.Send(query);
 
-            return _mapper.Map<IEnumerable<GetCarsQueryResponse>>(cars);
+            return Ok(cars);
+
+          
             
         }
 
         [HttpPost]
         public async Task<ActionResult<int>> CreateCar([FromBody] CreateCarCommand createCar)
         {
-            if(!ModelState.IsValid)
-            {
-                return BadRequest();
-            }
-            var car = _mapper.Map<Car>(createCar);
 
-            var carStore = await _carStoreRepository.GetCarStoreById(car.CarStoreId);
-
-            if(carStore is null) return BadRequest();
-
-            
-            car.ChasisNumber = Guid.NewGuid();
-            var result = await _carRepository.AddAsync(car);
-
-            return Ok(result.CarId);
+            return await _mediator.Send(createCar);
         }
     }
 }

@@ -1,7 +1,6 @@
-﻿
-using FluentValidation;
+﻿using FluentValidation;
 
-namespace CleanApiRest.Application.Features.Cars.CreateCar
+namespace CleanApiRest.Application.Cars.CreateCar
 {
     public class CreateCarCommandValidator : AbstractValidator<CreateCarCommand>
     {
