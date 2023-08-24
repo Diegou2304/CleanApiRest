@@ -18,15 +18,10 @@ namespace CleanApiRest.Infrastructure.Repositories
         public async Task<IEnumerable<Car>> GetCarByColor(string color)
         {
 
-            var result = await _context.Cars.AsNoTracking().Include(c => c.CarStoreId).Where(c => c.Color == color).ToListAsync();
+            var result = await _context.Cars.AsNoTracking().Include(c => c.CarStore).Where(c => c.Color == color).ToListAsync();
             return result;
         }
 
-        public async Task<IEnumerable<Car>> GetAll(string color)
-        {
-
-            var result = await _context.Cars.AsNoTracking().Include(c => c.CarStoreId).Where(c => c.Color == color).ToListAsync();
-            return result;
-        }
+      
     }
 }

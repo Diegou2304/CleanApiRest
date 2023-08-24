@@ -1,7 +1,6 @@
-﻿
-using MediatR;
+﻿using MediatR;
 
-namespace CleanApiRest.Application.Features.Cars.CreateCar
+namespace CleanApiRest.Application.Cars.CreateCar
 {
     public class CreateCarCommand : IRequest<int>
     {
