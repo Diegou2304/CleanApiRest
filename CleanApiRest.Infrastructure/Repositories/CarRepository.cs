@@ -3,7 +3,7 @@ using CleanApiRest.Application.Contracts;
 using CleanApiRest.Domain;
 using CleanApiRest.Infrastructure.Persistence;
 using Microsoft.EntityFrameworkCore;
-using System.Runtime.CompilerServices;
+
 
 namespace CleanApiRest.Infrastructure.Repositories
 {
@@ -19,6 +19,12 @@ namespace CleanApiRest.Infrastructure.Repositories
         {
 
             var result = await _context.Cars.AsNoTracking().Include(c => c.CarStore).Where(c => c.Color == color).ToListAsync();
+            return result;
+        }
+
+        public async Task<Car> GetCarById(int id)
+        {
+            var result = await _context.Cars.AsNoTracking().Where(c => c.CarId == id).FirstOrDefaultAsync();
             return result;
         }
 

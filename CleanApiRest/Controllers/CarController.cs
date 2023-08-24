@@ -1,16 +1,16 @@
 ﻿using AutoMapper;
 using CleanApiRest.Application.Contracts;
-using CleanApiRest.Application.Features.Cars.CreateCar;
-using CleanApiRest.Application.Features.Cars.GetCars;
+using CleanApiRest.Application.Cars.CreateCar;
+using CleanApiRest.Application.Cars.GetCars;
 using CleanApiRest.Domain;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
-
+using CleanApiRest.Application.Cars.GetCarById;
 
 namespace CleanApiRest.Api.Controllers
 {
     [ApiController]
-    [Route("[controller]")]
+  
     public class CarController : ControllerBase
     {
        
@@ -24,6 +24,7 @@ namespace CleanApiRest.Api.Controllers
         }
 
         [HttpGet]
+        [Route("[controller]")]
         public async Task<ActionResult<IEnumerable<GetCarsQueryResponse>>> Get([FromQuery] string? color)
         {
             var query = new GetCarsQueryResponse
@@ -34,12 +35,25 @@ namespace CleanApiRest.Api.Controllers
             var cars = await _mediator.Send(query);
 
             return Ok(cars);
-
-          
             
         }
 
+        [HttpGet("[controller]/{id}")]
+        public async Task<ActionResult<IEnumerable<GetCarsQueryResponse>>> GetCarById([FromRoute] int id)
+        {
+            var query = new GetCarByIdRequest
+            {
+                CarId = id,
+            };
+
+            var car = await _mediator.Send(query);
+
+            return Ok(car);
+
+        }
+
         [HttpPost]
+        [Route("[controller]")]
         public async Task<ActionResult<int>> CreateCar([FromBody] CreateCarCommand createCar)
         {
 

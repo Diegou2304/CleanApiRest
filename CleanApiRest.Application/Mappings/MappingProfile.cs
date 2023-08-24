@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using CleanApiRest.Application.Cars.CreateCar;
+using CleanApiRest.Application.Cars.GetCarById;
 using CleanApiRest.Application.Cars.GetCars;
 using CleanApiRest.Domain;
 
@@ -11,6 +12,7 @@ namespace CleanApiRest.Application.Mappings
         {
             CreateMap<CreateCarCommand, Car>();
             CreateMap<Car,GetCarsQueryResponse >();
+            CreateMap<Car, GetCarByIdResult >();
         }
      
     }
