@@ -59,7 +59,6 @@ namespace CleanApiRest.Infrastructure.Persistence
                 new Car
                 {
                     CarId = 1,
-                
                     Color = "Green",
                     Brand = "Toyota",
                     CarStoreId = 1
