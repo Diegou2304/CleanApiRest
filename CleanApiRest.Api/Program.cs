@@ -1,3 +1,4 @@
+using CleanApiRest.Api;
 using CleanApiRest.Application;
 using CleanApiRest.Infrastructure;
 using FluentValidation;
@@ -30,8 +31,8 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
+app.UseMiddleware<ApplicationMiddleware>();
 app.UseHttpsRedirection();
-
 app.UseAuthorization();
 
 app.MapControllers();
