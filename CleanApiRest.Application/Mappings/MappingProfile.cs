@@ -11,7 +11,7 @@ namespace CleanApiRest.Application.Mappings
         public MappingProfile()
         {
             CreateMap<CreateCarCommand, Car>();
-            CreateMap<Car,GetCarsQueryResponse >();
+            CreateMap<Car,GetCarsQueryResult >();
             CreateMap<Car, GetCarByIdResult >();
         }
      

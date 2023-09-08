@@ -2,7 +2,7 @@
 
 namespace CleanApiRest.Application.Cars.GetCars
 {
-    public class GetCarsQueryResponse : IRequest<IEnumerable<GetCarsQueryResponse>>
+    public class GetCarsQueryResult : IRequest<IEnumerable<GetCarsQueryResult>>
     {
         public int CarId { get; set; }
         public string Brand { get; set; }
