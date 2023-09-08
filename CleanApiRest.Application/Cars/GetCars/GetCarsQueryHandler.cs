@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace CleanApiRest.Application.Cars.GetCars
 {
-    public class GetCarsQueryHandler : IRequestHandler<GetCarsQueryResponse, IEnumerable<GetCarsQueryResponse>>
+    public class GetCarsQueryHandler : IRequestHandler<GetCarsQueryResult, IEnumerable<GetCarsQueryResult>>
     {
         private readonly ICarRepository _carRepository;
         private readonly IMapper _mapper;
@@ -23,17 +23,17 @@ namespace CleanApiRest.Application.Cars.GetCars
             _mapper = mapper;
         }
 
-        public async Task<IEnumerable<GetCarsQueryResponse>> Handle(GetCarsQueryResponse request, CancellationToken cancellationToken)
+        public async Task<IEnumerable<GetCarsQueryResult>> Handle(GetCarsQueryResult request, CancellationToken cancellationToken)
         {
             if (request.Color == null)
             {
                 var temp = await _carRepository.GetAll();
 
-                return _mapper.Map<IEnumerable<GetCarsQueryResponse>>(temp);
+                return _mapper.Map<IEnumerable<GetCarsQueryResult>>(temp);
             }
             var cars = await _carRepository.GetCarByColor(request.Color);
 
-            return _mapper.Map<IEnumerable<GetCarsQueryResponse>>(cars);
+            return _mapper.Map<IEnumerable<GetCarsQueryResult>>(cars);
         }
     }
 }

@@ -25,9 +25,9 @@ namespace CleanApiRest.Api.Controllers
 
         [HttpGet]
         [Route("[controller]")]
-        public async Task<ActionResult<IEnumerable<GetCarsQueryResponse>>> Get([FromQuery] string? color)
+        public async Task<ActionResult<IEnumerable<GetCarsQueryResult>>> Get([FromQuery] string? color)
         {
-            var query = new GetCarsQueryResponse
+            var query = new GetCarsQueryResult
             {
                 Color = color,
             };
@@ -39,7 +39,7 @@ namespace CleanApiRest.Api.Controllers
         }
 
         [HttpGet("[controller]/{id}")]
-        public async Task<ActionResult<IEnumerable<GetCarsQueryResponse>>> GetCarById([FromRoute] int id)
+        public async Task<ActionResult<IEnumerable<GetCarsQueryResult>>> GetCarById([FromRoute] int id)
         {
             var query = new GetCarByIdRequest
             {
